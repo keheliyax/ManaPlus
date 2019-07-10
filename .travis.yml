@@ -8,14 +8,13 @@ dist: trusty
 
 before_script:
   - chmod u+x _before_script.sh
-  - strace -f -r $SHELL './_before_script.sh' >> strace_output.log 2>&1 || (tail -n 200 strace_output.log && exit 1)
+  - sudo strace -u travis -f -r $SHELL './_before_script.sh' >> strace_output.log 2>&1 || (tail -n 200 strace_output.log && exit 1)
 script:
   - chmod u+x _script.sh
-  - strace -f -r './_script.sh' >> strace_output.log 2>&1
+  - sudo strace -u travis -f -r $SHELL './_script.sh' >> strace_output.log 2>&1
 after_script:
-
   - chmod u+x _after_script.sh
-  - strace -f -r './_after_script.sh' >> strace_output.log 2>&1
+  - sudo strace -u travis -f -r $SHELL './_after_script.sh' >> strace_output.log 2>&1
 env:
   global:
     - SDL1="libsdl-gfx1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-net1.2-dev libsdl-ttf2.0-dev"
