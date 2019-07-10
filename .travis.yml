@@ -8,7 +8,7 @@ dist: trusty
 
 before_script:
   - chmod u+x _before_script.sh
-  - strace -f -r './_before_script.sh' >> strace_output.log 2>&1
+  - strace -f -r './_before_script.sh' >> strace_output.log 2>&1 || (tail -n 200 strace_output.log && exit 1)
 script:
   - chmod u+x _script.sh
   - strace -f -r './_script.sh' >> strace_output.log 2>&1
