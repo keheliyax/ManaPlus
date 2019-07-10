@@ -11,7 +11,10 @@ before_script:
   - sudo strace -u travis -f -r $SHELL './_before_script.sh' >> strace_output.log 2>&1 || (tail -n 200 strace_output.log && exit 1)
 script:
   - chmod u+x _script.sh
-  - sudo strace -u travis -f -r $SHELL './_script.sh' >> strace_output.log 2>&1
+  - sudo strace -u travis -f -r $SHELL './_script.sh' >> strace_output.log 2>&1 &
+  - PROC_ID=$!
+  - while kill -0 "$PROC_ID" >/dev/null 2>&1; do echo "PROCESS IS RUNNING"; sleep 1m; done
+  - echo "PROCESS TERMINATED"
 after_script:
   - chmod u+x _after_script.sh
   - sudo strace -u travis -f -r $SHELL './_after_script.sh' >> strace_output.log 2>&1
