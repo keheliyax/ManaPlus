@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 sudo strace -u travis -f -r '$1'
 #sudo strace -u travis -f -r $SHELL '$1' >> strace_output.log 2>&1 &
 #PROC_ID=$!
