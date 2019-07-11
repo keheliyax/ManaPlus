@@ -6,7 +6,7 @@
 
 _COMMAND="$1"  # Needs to be quoted http://stackoverflow.com/questions/1983048/passing-a-string-with-spaces-as-a-function-argument-in-bash
 _SLEEP_LENGTH=$2; _SLEEP_LENGTH=${_SLEEP_LENGTH:=60}
-sudo strace -u travis -f -r $SHELL $_COMMAND >> strace_output.log 2>&1
+sudo strace -u travis -f -r $SHELL $_COMMAND >> strace_output.log 2>&1 &
 pid=$!
 
 _COUNT_LOOP=0
